@@ -1,0 +1,2 @@
+serviceClass: demo.client.DemoService
+path: D105FF3F9384C239C5AE46F449799611.gwt.rpc
