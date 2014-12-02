@@ -3,25 +3,37 @@
 
 <hibernate-mapping>
 	<class name="demo.client.Employee" table="EMPLOYEE">
-		<meta attribute="class-description">
-			This class contains the employee detail.
-		</meta>
+
 		<id name="id" type="int" column="id">
 			<generator class="native" />
 		</id>
 		<property name="firstName" column="first_name" type="string" />
 		<property name="lastName" column="last_name" type="string" />
 		<property name="salary" column="salary" type="int" />
-		 
-		<many-to-one name="address" column="address" class="demo.client.Address" lazy="false"
-			not-null="true" />
+
+		<many-to-one name="address" column="address" class="demo.client.Address" lazy="false" not-null="true" />
+			
+			
+		<set name="certificates" cascade="all" table="certificate" inverse="true" lazy="false"  >
+			<key column="employee_id" not-null="false"   />
+			<one-to-many class="demo.client.Certificate" />
+		</set>
 	</class>
 
- 
+
+	<class name="demo.client.Certificate" table="CERTIFICATE">
+
+		<id name="id" type="int" column="id">
+			<generator class="native" />
+		</id>
+		<property name="name" column="CERTIFICATE_NAME" type="string" />
+		<property name="employeeId" column="EMPLOYEE_ID" type="int" />
+	</class>
+
+
+
 	<class name="demo.client.Address" table="ADDRESS">
-		<meta attribute="class-description">
-			This class contains the address detail.
-		</meta>
+
 		<id name="id" type="int" column="id">
 			<generator class="native" />
 		</id>

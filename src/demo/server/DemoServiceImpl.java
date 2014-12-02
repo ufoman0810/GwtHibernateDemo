@@ -14,6 +14,9 @@ public class DemoServiceImpl extends RemoteServiceServlet implements DemoService
 
 	public String getEmployee(int id) {
 		Employee e = EmployeeDaoImpl.getInstance().getEmployeById(id);
+		if(e==null){
+			return "Kayýt Bulunamadý";
+		}
 		return e.getFirstName() + " - " + e.getLastName() + " adres:" + e.getAddress().getCity();
 
 	}

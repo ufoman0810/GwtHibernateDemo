@@ -1,6 +1,10 @@
-package demo.server;
+﻿package demo.server;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -9,6 +13,7 @@ import org.hibernate.Transaction;
 import org.hibernate.TransactionException;
 import org.hibernate.cfg.Configuration;
 
+import demo.client.Certificate;
 import demo.client.Employee;
 import demo.client.EmployeeDao;
 
@@ -24,9 +29,35 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	public List<Employee> getAllEmployees() {
 		session = factory.openSession();
-		List employees = session.createQuery("FROM Employee").list();
+		List<Employee> employees = session.createQuery("FROM Employee").list();
+		List<Employee> employeesdto = new ArrayList<Employee>(employees!=null?employees.size():0);
+		if(employees!=null){
+			for(Employee e : employees){
+				employeesdto.add( createEmployeeDTO(e));
+			}
+		}
+		
+		
 		session.close();
-		return employees;
+		return employeesdto;
+	}
+	
+	private Employee createEmployeeDTO(Employee e){
+		
+		 Employee employeeInstance  = new Employee(e.getFirstName(), e.getLastName(), e.getSalary(), e.getAddress());
+		 employeeInstance.setId(e.getId());
+		 Set<Certificate> certificates = e.getCertificates();
+		 Set<Certificate> certificateInstance= new HashSet<Certificate>(certificates !=null ? certificates.size():0);
+		 if(certificates!=null){ 
+			 for (Iterator iterator = certificateInstance.iterator(); iterator.hasNext();) {
+				Certificate certificate = (Certificate) iterator.next();
+				certificateInstance.add(certificate);
+			}
+		 }
+		 
+		 employeeInstance.setCertificates(certificateInstance);
+		 return employeeInstance;
+		
 	}
 
 	public Employee getEmployeById(int id) {

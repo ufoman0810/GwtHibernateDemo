@@ -1,7 +1,10 @@
 package demo.client;
 
-import java.io.Serializable;
-import java.util.List;
+import java.io.Serializable; 
+import java.util.Set;
+
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 
  
 public class Employee implements Serializable{
@@ -10,14 +13,13 @@ public class Employee implements Serializable{
 	private String lastName;
 	private int salary;
 	private Address address;
-	 
+	private Set<Certificate> certificates;
+
 
 	public Employee() {
 	}
 
-	public static List<Employee> findAllEmployees() {
-		return null;//EmployeeDaoImpl.getInstance().getAllEmployees();
-	}
+	 
 
 	public Employee(String fname, String lname, int salary, Address address) {
 		this.firstName = fname;
@@ -26,6 +28,9 @@ public class Employee implements Serializable{
 		this.address = address;
 	}
  
+	public  Set<Certificate>  getCertificates() { 	return certificates; }
+public void setCertificates( Set<Certificate>  certificates) { this.certificates = certificates; }
+
 
 	public int getId() {
 		return id;

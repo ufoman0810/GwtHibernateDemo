@@ -20,7 +20,7 @@ public class RpcDemo implements EntryPoint {
 	final TextBox txtFullName = new TextBox();
 	final TextBox txtAddress = new TextBox();
 
-	Button btnGetEmployee = new Button("Çalýþaný getir");
+	Button btnGetEmployee = new Button("Çalýþan getir");
 	Button btnAddEmployee = new Button("Ekle");
 
 	final ListBox lst = new ListBox();
@@ -62,6 +62,7 @@ public class RpcDemo implements EntryPoint {
 							}
 
 							public void onFailure(Throwable caught) {
+								
 							}
 						});
 
@@ -74,6 +75,7 @@ public class RpcDemo implements EntryPoint {
 		btnGetEmployee.addClickHandler(new ClickHandler() {
 
 			public void onClick(ClickEvent event) {
+		
 				service.getEmployee(Integer.parseInt(lst.getSelectedValue()), new AsyncCallback<String>() {
 
 					public void onFailure(Throwable caught) {
@@ -104,6 +106,7 @@ public class RpcDemo implements EntryPoint {
 			}
 
 			public void onFailure(Throwable caught) {
+				Window.alert(caught.getMessage() );
 			}
 		});
 
